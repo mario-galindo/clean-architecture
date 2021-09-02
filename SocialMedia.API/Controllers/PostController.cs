@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using SocialMedia.Infrastructure.Repositories;
 
 namespace SocialMedia.API.Controllers
 {
@@ -11,8 +7,12 @@ namespace SocialMedia.API.Controllers
     [Route("api/[controller]")]
     public class PostController : ControllerBase
     {
-       public IActionResult GetPosts(){
-           return Ok(null);
-       }
+        public IActionResult GetPosts()
+        {
+
+            var posts = new PostRepository().GetPosts();
+
+            return Ok(posts);
+        }
     }
 }
