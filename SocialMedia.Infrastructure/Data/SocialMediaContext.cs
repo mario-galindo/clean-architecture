@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-#nullable disable
+using SocialMedia.Core.Entities;
 
 namespace SocialMedia.Infrastructure.Data
 {
