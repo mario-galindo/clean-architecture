@@ -15,7 +15,7 @@ namespace SocialMedia.Infrastructure.Data
         }
 
         public virtual DbSet<Comentario> Comentarios { get; set; }
-        public virtual DbSet<Publicacion> Publicacions { get; set; }
+        public virtual DbSet<Post> Publicacions { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,7 +38,7 @@ namespace SocialMedia.Infrastructure.Data
                 entity.Property(e => e.Fecha).HasColumnType("datetime");
 
                 entity.HasOne(d => d.IdPublicacionNavigation)
-                    .WithMany(p => p.Comentarios)
+                    .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.IdPublicacion)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Comentario_Publicacion");
@@ -50,26 +50,26 @@ namespace SocialMedia.Infrastructure.Data
                     .HasConstraintName("FK_Comentario_Usuario");
             });
 
-            modelBuilder.Entity<Publicacion>(entity =>
+            modelBuilder.Entity<Post>(entity =>
             {
-                entity.HasKey(e => e.IdPublicacion);
+                entity.HasKey(e => e.PostId);
 
                 entity.ToTable("Publicacion");
 
-                entity.Property(e => e.Descripcion)
+                entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(1000)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Fecha).HasColumnType("datetime");
+                entity.Property(e => e.Date).HasColumnType("datetime");
 
-                entity.Property(e => e.Imagen)
+                entity.Property(e => e.Image)
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.IdUsuarioNavigation)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.Publicacions)
-                    .HasForeignKey(d => d.IdUsuario)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Publicacion_Usuario");
             });

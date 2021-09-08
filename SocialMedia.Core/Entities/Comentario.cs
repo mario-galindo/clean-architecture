@@ -14,7 +14,7 @@ namespace SocialMedia.Core.Entities
         public DateTime Fecha { get; set; }
         public bool Activo { get; set; }
 
-        public virtual Publicacion IdPublicacionNavigation { get; set; }
+        public virtual Post IdPublicacionNavigation { get; set; }
         public virtual Usuario IdUsuarioNavigation { get; set; }
     }
 }

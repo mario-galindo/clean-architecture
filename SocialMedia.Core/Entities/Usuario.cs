@@ -10,7 +10,7 @@ namespace SocialMedia.Core.Entities
         public Usuario()
         {
             Comentarios = new HashSet<Comentario>();
-            Publicacions = new HashSet<Publicacion>();
+            Publicacions = new HashSet<Post>();
         }
 
         public int IdUsuario { get; set; }
@@ -22,6 +22,6 @@ namespace SocialMedia.Core.Entities
         public bool Activo { get; set; }
 
         public virtual ICollection<Comentario> Comentarios { get; set; }
-        public virtual ICollection<Publicacion> Publicacions { get; set; }
+        public virtual ICollection<Post> Publicacions { get; set; }
     }
 }
