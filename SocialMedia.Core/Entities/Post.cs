@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SocialMedia.Core.Entities
 {
-    public partial class Post
+    public class Post
     {
         public Post()
         {
