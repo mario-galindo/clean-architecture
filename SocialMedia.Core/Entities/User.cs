@@ -19,7 +19,7 @@ namespace SocialMedia.Core.Entities
         public string Cellphone { get; set; }
         public bool IsActive { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Post> Posts { get; set; }
     }
 }
