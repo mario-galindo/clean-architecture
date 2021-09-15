@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace SocialMedia.API
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddDbContext<SocialMediaContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SocialMedia")));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SocialMedia.API", Version = "v1" });
