@@ -10,6 +10,8 @@ using SocialMedia.Core.Interfaces;
 using SocialMedia.Infrastructure.Data;
 using SocialMedia.Infrastructure.Repositories;
 using SocialMedia.API.Filters;
+using FluentValidation.AspNetCore;
+using SocialMedia.API.Validators;
 
 namespace SocialMedia.API
 {
@@ -24,10 +26,7 @@ namespace SocialMedia.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().ConfigureApiBehaviorOptions(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
-            });
+            services.AddControllers();
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddDbContext<SocialMediaContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SocialMedia")));
@@ -39,7 +38,9 @@ namespace SocialMedia.API
             services.AddMvc(options =>
             {
                 options.Filters.Add<ValidationFilter>();
-            });
+            }).AddFluentValidation(fv =>
+                fv.RegisterValidatorsFromAssemblyContaining<PostValidator>());
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
