@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using SocialMedia.Core.Interfaces;
 using SocialMedia.Infrastructure.Data;
 using SocialMedia.Infrastructure.Repositories;
+using SocialMedia.API.Filters;
 
 namespace SocialMedia.API
 {
@@ -23,7 +24,8 @@ namespace SocialMedia.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().ConfigureApiBehaviorOptions(options => {
+            services.AddControllers().ConfigureApiBehaviorOptions(options =>
+            {
                 options.SuppressModelStateInvalidFilter = true;
             });
             services.AddTransient<IPostRepository, PostRepository>();
@@ -33,6 +35,10 @@ namespace SocialMedia.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SocialMedia.API", Version = "v1" });
+            });
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<ValidationFilter>();
             });
         }
 
