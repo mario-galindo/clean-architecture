@@ -5,6 +5,7 @@ using SocialMedia.Core.Entities;
 using System.Collections.Generic;
 using SocialMedia.Core.Interfaces;
 using AutoMapper;
+using SocialMedia.API.Responses;
 
 namespace SocialMedia.API.Controllers
 {
@@ -25,7 +26,8 @@ namespace SocialMedia.API.Controllers
         {
             var posts = await _postRepository.GetPosts();
             var postsDto = _mapper.Map<IEnumerable<PostDto>>(posts);
-            return Ok(postsDto);
+            var response = new ApiResponse<IEnumerable<PostDto>>(postsDto);
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
@@ -33,7 +35,8 @@ namespace SocialMedia.API.Controllers
         {
             var post = await _postRepository.GetPost(id);
             var postDto = _mapper.Map<PostDto>(post);
-            return Ok(postDto);
+            var response = new ApiResponse<PostDto>(postDto);
+            return Ok(response);
         }
 
         [HttpPost]
@@ -41,7 +44,9 @@ namespace SocialMedia.API.Controllers
         {
             var post = _mapper.Map<Post>(postDto);
             await _postRepository.InsertPost(post);
-            return Ok(post);
+            postDto = _mapper.Map<PostDto>(post);
+            var response = new ApiResponse<PostDto>(postDto);
+            return Ok(response);
         }
 
         [HttpPut]
@@ -50,14 +55,16 @@ namespace SocialMedia.API.Controllers
             var post = _mapper.Map<Post>(postDto);
             post.PostId = id;
 
-            await _postRepository.UpdatePost(post);
-            return Ok(post);
+            var result = await _postRepository.UpdatePost(post);
+            var response = new ApiResponse<bool>(result);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var response = await _postRepository.DeletePost(id);
+            var result = await _postRepository.DeletePost(id);
+            var response = new ApiResponse<bool>(result);
             return Ok(response);
         }
     }
