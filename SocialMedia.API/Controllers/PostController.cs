@@ -54,7 +54,7 @@ namespace SocialMedia.API.Controllers
             return Ok(post);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var response = await _postRepository.DeletePost(id);
