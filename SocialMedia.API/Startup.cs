@@ -17,6 +17,8 @@ namespace SocialMedia.API
 {
     public class Startup
     {
+        private string _SocialMediaKey = null;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,10 +28,12 @@ namespace SocialMedia.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            _SocialMediaKey = Configuration["ConnectionStrings:SocialMedia"]; 
+            
             services.AddControllers();
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddDbContext<SocialMediaContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SocialMedia")));
+                options.UseSqlServer(_SocialMediaKey));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
